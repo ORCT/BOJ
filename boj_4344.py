@@ -7,14 +7,12 @@ for i in range(case):
     stu = line[0]
     score = line[1:]
     avg=sum(score)/stu
-    div_score=[]
+    count=0
 
     for i in range(stu):
         num=score[i]-avg
         if num>0:
-            div_score.append(num)
+            count +=1
             
-    ratio = len(div_score)/stu
-    round_ratio = round(len(div_score)/stu,5)
-    str_num = str(int((round_ratio*100000)))
-    print(str_num[0]+str_num[1]+'.'+str_num[2]+str_num[3]+str_num[4]+'%')
+    ratio = count/stu * 100
+    print(f'{ratio:.3f}%')
