@@ -1,4 +1,3 @@
-#i think maybe 1~99 is 
 def find_hnum(n:int):
     check_num=int(str(n)[0])-int(str(n)[1])
     test_num=0
