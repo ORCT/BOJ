@@ -2,11 +2,11 @@ import sys
 T = int(input())
 for i in range(T):
     x,y = map(int,sys.stdin.readline().split())
-    max_distance=0
-    while 1:
-        max_distance+=1
-        if y-x>=max_distance**2 and y-x<(max_distance+1)**2:
-            break
+    max_distance=int((y-x)**(1/2))
+    #while 1:
+    #    max_distance+=1
+    #    if y-x>=max_distance**2 and y-x<(max_distance+1)**2:
+    #        break
     if y-x == max_distance**2:
         print(max_distance*2-1)
     else:
