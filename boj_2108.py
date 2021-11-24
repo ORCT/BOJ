@@ -12,6 +12,8 @@ def get_frequent_num(num : list):
     for i in range(len(cnt)):
         if max_cnt == cnt[i]:
             frequent_list.append(i)
+    for i in range(len(num)):
+        num[i] -= add_num
     if len(frequent_list) == 1:
         return frequent_list[0]-add_num
     else:
@@ -24,6 +26,6 @@ for i in range(n):
 num.sort()
 
 print(round(sum(num)/n))
-print(num[round(n/2)])
+print(num[n//2])
 print(get_frequent_num(num))
 print(num[n-1]-num[0])
