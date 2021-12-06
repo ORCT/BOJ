@@ -2,13 +2,11 @@ t = int(input())
 a = []
 for i in range(t):
     a.append(input().split())
-a_len = len(a)
 seq = []
-for i in range(a_len):
+for i in range(len(a)):
     cnt = 1
-    for j in range(a_len):
-        if a[i][0] < a[j][0] and a[i][1] < a[j][1]:
+    for j in range(len(a)):
+        if int(a[i][0]) < int(a[j][0]) and int(a[i][1]) < int(a[j][1]):
             cnt += 1
     seq.append(cnt)
-for i in seq:
-    print(i, end=' ')
+print(*seq)
