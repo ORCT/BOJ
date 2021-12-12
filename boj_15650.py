@@ -18,6 +18,6 @@ def func(arr_len):
             arr.pop()
             check_list[i] = False
             
-func(0)
+func(arr_len)
 #일단 리스트 같은 자료형에다 추가한 다음에 조건에 맞으면 출력하도록 하는 형태는 기본으로 깔아야 함
 #여기서 수열끼리의 중복도 지우는 것이다
