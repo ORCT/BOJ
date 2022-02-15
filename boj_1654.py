@@ -29,3 +29,21 @@ while 1:
                 break
         break
 '''
+import sys
+ssr = sys.stdin.readline
+
+k,n = map(int, ssr().split())
+line=[int(ssr()) for _ in range(k)]
+low = 1
+high = sum(line)//n
+while low<=high:
+    value = (low+high)//2
+    cnt = 0
+    for i in line:
+        cnt += i//value
+    if cnt < n:
+        high = value-1
+    elif cnt >= n:
+        low = value+1
+
+print(high)
