@@ -76,7 +76,10 @@ for i in btn:
 n = int(input())
 result = abs(100 - n)
 m = int(input())
-b = input().split()
+if m == 0:
+    b = []
+else:
+    b = input().split()
 for i in range(1000001):
     for j in str(i):
         if j in b:
