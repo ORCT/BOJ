@@ -62,3 +62,38 @@ sum_v = 0
 func(0)
 print(max(value))
 '''
+'''
+Third, dp but time over
+
+import sys
+ssr = sys.stdin.readline
+
+n,k = map(int, ssr().split())
+table = [0 for _ in range(k+1)]
+for _ in range(n):
+    w,v = map(int, ssr().split())
+    if table[w] < v:
+        table[w] = v
+for i in range(k+1):
+    for j in range(i+1,k+1):
+        if j+i<=k:
+            table[j+i]=max(table[j+i],table[j]+table[i])
+print(table[k])'''
+
+import sys
+ssr = sys.stdin.readline
+
+n,k = map(int, ssr().split())
+t = [[0 for _ in range(k+1)] for _ in range(n+1)]
+items=[[0,0]]
+for _ in range(n):
+    items.append(list(map(int, input().split())))
+for i in range(n+1):
+    for j in range(k+1):
+        w = items[i][0]
+        v = items[i][1]
+        if j < w:
+            t[i][j] = t[i-1][j]
+        else:
+            t[i][j] = max(v + t[i-1][j-w], t[i-1][j])
+print(t[n][k])
