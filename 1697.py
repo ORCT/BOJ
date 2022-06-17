@@ -1,16 +1,3 @@
-# def sol(pos,sec):
-#     if pos == 0:
-#         return
-#     elif pos == k:
-#         return sec
-#     sol(pos-1,sec+1)
-#     sol(pos+1,sec+1)
-#     sol(2*pos,sec+1)
-
-# n,k = map(int,input().split())
-# ans = []
-# ans.append(sol(n,0))
-# print(min(ans))
 from collections import deque
 
 n,k = map(int, input().split())
