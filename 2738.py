@@ -7,3 +7,4 @@ for i in range(n):
         c[i][j] = a[i][j] + b[i][j]
 for i in c:
     print(*i)
+    
