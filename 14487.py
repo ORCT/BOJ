@@ -1,0 +1,5 @@
+n = int(input())
+num = list(map(int, input().split()))
+max_num = max(num)
+num.remove(max_num)
+print(sum(num))
