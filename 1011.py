@@ -97,13 +97,6 @@ a-0.5 ~ a+0.5까지는 a에 대한 반복수로 나옴
 #         elif y-x >= (max_distance+1)**2-max_distance and y-x < (max_distance+1)**2:
 #             print((max_distance+1)*2-1)
 
-'''
-왜 틀렸다는 걸까
-
-bfs로 한 번 풀어볼까
-수학이라고 못박아놓고 데이터 사이즈 엄청 크게 준 거 보면 도저히 계산식 하나 아니면 못풀게 하고 싶은거 같은데
-'''
-
 import sys
 ssr = sys.stdin.readline
 
