@@ -1,16 +1,118 @@
+'''
+kn = kn-1 - 1 or kn-1 or kn-1 + 1
+
+최초 k0 = 0 따라서 k1 = -1 or 0 or 1인데 의미있는 이동은 1이니까 1이다 뭐 그런거임
+그리고 y애 도착하는 이동은 무조건 1이어야함
+따라서 그 전의 이동은 2나 1이나 0이 가능한거지
+그러면 자연스럽게 최댓값 기준으로 좌우대칭인 모양이 나오지 않을까?
+예를 들어서 계속 이동거리를 늘려간다고 가정했을 때
+1 2 3 4 5 6 7 8 9 10 그리고 최대한 늦추는 방법도 9 8 7 6 5 4 3 2 1 이렇게 낮추는 방법 밖에 없어
+그게 제일 빨리 가는 방법이지
+다 정수라서 완전히 좌우대칭일 순 없다
+
+범위가 2의 31제곱 까지니까 미리 테이블 만드는 건 불가능
+
+거리가 1이면 1로 한 번 이동하면 끝
+거리가 2면 1 1로 이동
+거리가 3이면 1 1 1 그래 이런식으로 도착 때문에 올리지 못하고 쭉 가야하는 일도 있는거지
+거리가 4면 1 2 1 
+5면 1 2 1 1
+6이면 1 2 2 1
+7이면 1 2 2 1 1
+8이면 1 2 2 2 1
+9이면 1 2 3 2 1
+10이면 1 2 3 2 1 1 / 1 2 2 2 2 1
+11이면 1 2 3 2 2 1
+12이면 1 2 3 3 2 1
+13이면 1 2 3 3 2 1 1
+14이면 1 2 3 3 2 2 1
+
+횟수가 1번 1번 2번 2번 3번 3번 4번 4번 으로 늘어나는 것 같다
+1번 1
+1번 2
+2번 3 4
+2번 5 6
+
+1 2 3 3 4 4 5 5 5 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 9 10 10 10 10 10
+숫자가 2칸마다 1회와 1반복이 늘어난다
+1은 1
+2는 2
+3은 3
+4는 3
+5는 4
+6은 4
+7 5
+8 5
+9 5
+10 6
+11 6
+12 6
+13 7
+14 7
+15 7
+16 7
+17 8
+18 8
+19 8
+20 8
+.
+.
+.
+아마 이 밑으로는 보면 21~ 25는 9
+26~30은 10
+31~36은 11 이런식으로 되지 않을까 싶은데
+이렇게 생각해서 숫자의 범위를 나누면 어떻게 될까
+1 * 2까지는 1번
+2 * 2까지는 2번
+3 * 2까지는 3번
+4 * 2까지는 4번씩 반복됨
+따라서 반복횟수는 거리 나누기 2해서 이게 몇번째 반복이구나 하고 알 수는 있을 듯
+이동횟수는?
+n의 제곱근보다 작으면 n*2-1
+n의 제곱근보다 크면 n*2
+
+최대범위 2^31에서 n*(n+1)의 n을 구하기위해 대충 제곱근해보면 46340
+그냥 for 반복문으로 n찾아도 괜찮을듯
+아니다 제곱근 구했을 때 나온게 a.xxxxx라고 쳤을 때
+a-0.5 ~ a+0.5까지는 a에 대한 반복수로 나옴
+예를 들어서 13~20은 3.5~4.5까진데
+이걸 이용해서 13부터 16은 3.5~4까지니까 4*2-1해서 7이고
+17~20까지는 ~4.5니까 4*2 해서 8'''
+
+# import sys
+# ssr = sys.stdin.readline
+# T = int(ssr())
+# for i in range(T):
+#     x, y = map(int, ssr().split())
+#     max_distance = int((y-x)**(1/2))
+#     # while 1:
+#     #    max_distance+=1
+#     #    if y-x>=max_distance**2 and y-x<(max_distance+1)**2:
+#     #        break
+#     if y-x == max_distance**2:
+#         print(max_distance*2-1)
+#     else:
+#         if y-x > max_distance*2 and y-x <= max_distance**2+max_distance:
+#             print(max_distance*2)
+#         elif y-x >= (max_distance+1)**2-max_distance and y-x < (max_distance+1)**2:
+#             print((max_distance+1)*2-1)
+
+'''
+왜 틀렸다는 걸까
+
+bfs로 한 번 풀어볼까
+수학이라고 못박아놓고 데이터 사이즈 엄청 크게 준 거 보면 도저히 계산식 하나 아니면 못풀게 하고 싶은거 같은데
+'''
+
 import sys
-T = int(input())
-for i in range(T):
-    x,y = map(int,sys.stdin.readline().split())
-    max_distance=int((y-x)**(1/2))
-    #while 1:
-    #    max_distance+=1
-    #    if y-x>=max_distance**2 and y-x<(max_distance+1)**2:
-    #        break
-    if y-x == max_distance**2:
-        print(max_distance*2-1)
+ssr = sys.stdin.readline
+
+t = int(ssr())
+for _ in range(t):
+    x, y = map(int, ssr().split())
+    dist = y-x
+    rep = dist**(1/2)
+    if rep <= int(f'{rep:.0f}'):
+        print(int(f'{rep:.0f}')*2-1)
     else:
-        if y-x>max_distance*2 and y-x<=max_distance**2+max_distance:
-            print(max_distance*2)
-        elif y-x>=(max_distance+1)**2-max_distance and y-x<(max_distance+1)**2:
-            print((max_distance+1)*2-1)
+        print(int(f'{rep:.0f}')*2)
