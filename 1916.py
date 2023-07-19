@@ -23,21 +23,39 @@ while q:
         visited[i[0]] = 1
 print(ans)'''
 '''
-참고로 위 풀이는 메모리초과가 났다
-데이크스트라'''
+참고로 위 풀이(bfs)는 메모리초과가 났다.
+데이크스트라에 대해서 알아보자
 
+전형적인 데이크스트라 문제다
+간선과 간선의 길이 또는 비용이 주어지고'''
+
+import heapq
 import sys
 ssr = sys.stdin.readline
+INF = 100000000
+
+def dijkstra(start, arrive):
+    min_cost = [INF for _ in range(n+1)]
+    visited = [False for _ in range(n+1)]
+    h = []
+    heapq.heappush(h, (0, start)) # 거리, 도착 순서
+    min_cost[start] = 0
+    while h:
+        now_cost, now = heapq.heappop(h) # 거리, 도착 순서
+        if now_cost > min_cost[now]:
+            continue
+        if visited[now] == False:
+            visited[now] = True
+            for after_cost, after in bus[now]:
+                min_cost[after] = min(min_cost[now] + after_cost, min_cost[after])
+                heapq.heappush(h, (min_cost[after], after))
+    print(min_cost[arrive])
 
 n = int(ssr())
 m = int(ssr())
-adj_dict = {i:[] for i in range(1,n+1)}
+bus = [[] for _ in range(n+1)]
 for _ in range(m):
-    tmp = list(map(int, ssr().split()))
-    adj_dict[tmp[0]].append((tmp[1], tmp[2]))
-start, end = map(int, ssr().split())
-visited = [0 for _ in range(n+1)]
-t = [100001 for _ in range(n+1)]
-while 1:
-    for i in adj_dict[start]:
-        if visited[i] == 0 and t[i]
+    a, b, c = map(int, ssr().split())
+    bus[a].append((c, b))
+start, arrive = map(int, ssr().split())
+dijkstra(start, arrive)
