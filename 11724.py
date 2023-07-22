@@ -1,4 +1,4 @@
-import sys
+'''import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(10000)
 
@@ -22,4 +22,30 @@ for i in range(1,n+1):
     a = sol(i)
     if i == a:
         cnt += 1
-print(cnt)
+print(cnt)'''
+
+from collections import deque
+import sys
+ssr = sys.stdin.readline
+
+n, m = map(int, ssr().split())
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+    a, b = map(int, ssr().split())
+    graph[a].append(b)
+    graph[b].append(a)
+visited = [False for _ in range(n+1)]
+q = deque([])
+ans = 0
+for i in range(1, n+1):
+    if visited[i] == False:
+        visited[i] = True
+        q.append(i)
+        ans += 1
+        while q:
+            now = q.popleft()
+            for j in graph[now]:
+                if visited[j] == False:
+                    q.append(j)
+                    visited[j] = True
+print(ans)
