@@ -36,7 +36,6 @@ INF = 100000000
 
 def dijkstra(start, arrive):
     min_cost = [INF for _ in range(n+1)]
-    visited = [False for _ in range(n+1)]
     h = []
     heapq.heappush(h, (0, start)) # 거리, 도착 순서
     min_cost[start] = 0
@@ -44,10 +43,9 @@ def dijkstra(start, arrive):
         now_cost, now = heapq.heappop(h) # 거리, 도착 순서
         if now_cost > min_cost[now]:
             continue
-        if visited[now] == False:
-            visited[now] = True
-            for after_cost, after in bus[now]:
-                min_cost[after] = min(min_cost[now] + after_cost, min_cost[after])
+        for after_cost, after in bus[now]:
+            if min_cost[now]+after_cost < min_cost[after]:
+                min_cost[after] = min_cost[now] + after_cost
                 heapq.heappush(h, (min_cost[after], after))
     print(min_cost[arrive])
 

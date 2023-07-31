@@ -24,10 +24,9 @@ def dijkstra():
         cur_dist, cur_node = heapq.heappop(h)
         if cur_dist > dist[cur_node]:
             continue
-        if visited[cur_node] == False:
-            visited[cur_node] = True
-            for next_dist, next_node in routes[cur_node]:
-                dist[next_node] = min(dist[cur_node] + next_dist, dist[next_node])
+        for next_dist, next_node in routes[cur_node]:
+            if dist[cur_node]+next_dist < dist[next_node]:
+                dist[next_node] = dist[cur_node] + next_dist
                 heapq.heappush(h, (dist[next_node], next_node))
         
 n, m, k, x = map(int, ssr().split())
@@ -38,7 +37,6 @@ for _ in range(m):
 dist = [INF for _ in range(n+1)]
 h = [(0, x)]
 dist[x] = 0
-visited = [False for _ in range(n+1)]
 dijkstra()
 ans = []
 for i in range(1, n+1):
