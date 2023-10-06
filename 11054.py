@@ -115,7 +115,37 @@ print(max(ans))
 '''
 위와 비슷한 방법이지만 정렬된 수를 담는 테이블을 사용해서
 이진 탐색으로 현재의 원소가 들어갈 자리를 찾으면서 시간복잡도를 줄이는 방법
+
+start = mid+1을 했다면 end를 반환하고, end = mid-1을 했다면 start를 반환해라
+그리고 무조건 먼저 조건문에 작성한 쪽을 mid가감 조작을 한다
 '''
+
+def bs(subs, cur_num):
+    start = 0
+    end = len(subs)
+    while start < end:
+        mid = (start + end)//2
+        if cur_num > subs[mid]:
+            start = mid+1
+        else:
+            end = mid
+    return end
+
+def lis(arr):
+    dp = [1 for _ in range(n)]
+    subs = [arr[0]]
+    for i in range(1, n):
+        if arr[i] > subs[-1]:
+            subs.append(arr[i])
+        else:
+            bs_idx = bs(subs, arr[i])
+            subs[bs_idx] = arr[i]
+        dp[i] = len(subs)
+    return dp
 
 n = int(input())
 a = list(map(int, input().split()))
+asc = lis(a)
+des = lis(a[::-1])[::-1]
+ans = [asc[i]+des[i]-1 for i in range(n)]
+print(max(ans))
