@@ -65,6 +65,9 @@
 이거랑 보드 밖으로 못나가게 하는걸 어떻게 같이 체크하지
 '''
 
+'''
+# DFS
+
 import sys; ssr = sys.stdin.readline
 
 def f(cur_r, cur_c, cur_dir):
@@ -88,3 +91,36 @@ board[0][0], board[0][1] = 2, 2
 ans = 0
 f(0, 1, 0)
 print(ans)
+'''
+
+'''
+그래서 이걸 dp로 풀면 어떻게 되려나
+오른쪽 아래를 기준으로 잡고 3x3, 4x4, 5x5 이렇게 나가야 하나
+벽은 어떻게 해야하지
+
+이 문제에서 dp table 의 의미 : 현재 칸을 끝으로 하는 가로, 세로, 대각선의 파이프 개수
+초기 상태를 예로 들면 dp[0][1] = [1, 0, 0] # 가로, 대각, 세로 순서일 때
+이렇게 쓸 수 있다는 얘기
+3차원 dp라니 이건 진짜 처음이네
+
+반복문을 사용하고 이전 노드의 값을 활용하면 지금 노드의 값을 채울 수 있음
+예를 들어 가로 파이프의 경우 직전 파이프가 가로거나 대각선인 경우 둘 다 가능
+따라서 dp[i][j][0] = dp[i][j-1][0] + dp[i-1][j-1][1] 이런식으로 점화식을 작성할 수 있을 듯'''
+
+# DP : 모든 경우를 다 돌려보고 최선의 경우를 저장
+
+import sys; ssr = sys.stdin.readline
+
+n = int(ssr())
+board = [list(map(int, ssr().split())) for _ in range(n)]
+dp = [[[0, 0, 0] for _ in range(n)] for _ in range(n)]
+dp[0][1][0] = 1
+for i in range(n):
+    for j in range(2, n):
+        if board[i][j] == 1:
+            continue
+        dp[i][j][0] = dp[i][j-1][0] + dp[i][j-1][1]
+        if board[i-1][j] == 0 and board[i][j-1] == 0:
+            dp[i][j][1] = dp[i-1][j-1][0] + dp[i-1][j-1][1] + dp[i-1][j-1][2]
+        dp[i][j][2] = dp[i-1][j][1] + dp[i-1][j][2]
+print(sum(dp[n-1][n-1]))
